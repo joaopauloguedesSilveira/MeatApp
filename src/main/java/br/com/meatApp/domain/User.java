@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -29,7 +31,7 @@ public class User implements Serializable{
 	
 	@NotNull
 	@Email
-	@Column(name="email")
+	@Column(name="email", unique=true)
 	private String email;
 	
 	@NotNull
