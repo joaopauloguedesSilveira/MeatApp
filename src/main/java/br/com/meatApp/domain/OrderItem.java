@@ -50,7 +50,7 @@ public class OrderItem implements Serializable{
 	public double getSubTotal() {
 		return price * quantity;
 	}
-
+	
 	@JsonIgnore
 	public Orders getOrders() {
 		return id.getOrders();

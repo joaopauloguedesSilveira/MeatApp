@@ -11,55 +11,47 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.meatApp.domain.User;
-import br.com.meatApp.services.UserService;
+import br.com.meatApp.domain.MenuItem;
+import br.com.meatApp.services.MenuItemService;
 
-public class UserResources {
-
+public class MenuItemResources {
 	@Autowired
-	private UserService userService;
+	private MenuItemService MenuItemService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll(){
-		List<User> users = userService.findAll();
-		return ResponseEntity.ok().body(users);
+	public ResponseEntity<List<MenuItem>> findAll(){
+		List<MenuItem> menuItem = MenuItemService.findAll();
+		return ResponseEntity.ok().body(menuItem);
 	}
 	
 	@RequestMapping(value="id/{id}" ,method=RequestMethod.GET)
-	public ResponseEntity<User> findById(@PathVariable Integer id){
-		User user = userService.FindById(id);
-		return ResponseEntity.ok().body(user);
-	}
-	
-	@RequestMapping(value="/email",method=RequestMethod.GET)
-	public ResponseEntity<User> findByEmail(@RequestParam(value="email") String email){
-		User user = userService.FindByEmail(email);
-		return ResponseEntity.ok().body(user);
+	public ResponseEntity<MenuItem> findById(@PathVariable Integer id){
+		MenuItem menuItem = MenuItemService.FindById(id);
+		return ResponseEntity.ok().body(menuItem);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<User> insert(@Valid @RequestBody User user){
-		user = userService.InsertUser(user);
+	public ResponseEntity<MenuItem> insert(@Valid @RequestBody MenuItem menuItem){
+		menuItem = MenuItemService.InsertUser(menuItem);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand(user.getId())
+				.buildAndExpand(menuItem.getId())
 				.toUri();
-		return ResponseEntity.created(uri).body(user);
+		return ResponseEntity.created(uri).body(menuItem);
 	}
 	
 	@RequestMapping(value="id/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id,@Valid @RequestBody User user){
-		user = userService.update(user, id);
+	public ResponseEntity<Void> update(@PathVariable Integer id,@Valid @RequestBody MenuItem menuItem){
+		menuItem = MenuItemService.update(menuItem, id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
-		userService.delete(id);
+		MenuItemService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
